@@ -1,0 +1,4 @@
+#Não mostra todos os dados do erro
+server:
+  error:
+    include-stackTrace: never
