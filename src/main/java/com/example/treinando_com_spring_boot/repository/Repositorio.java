@@ -1,7 +1,9 @@
 package com.example.treinando_com_spring_boot.repository;
 
 import com.example.treinando_com_spring_boot.model.Anime;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -21,4 +23,22 @@ public interface Repositorio extends CrudRepository<Anime, Integer> {
     //Utilizei Nome porque ele é um atributo existente
     //e defini um parâmetro String pois nome é String
     //Outro tipo de parâmetro daria erro
+
+    List<Anime> findByOrderByNome();
+    List<Anime> findByOrderByNomeDesc();
+
+    //Containing == LIKE do MYSQL
+    List<Anime> findByNomeContaining(String termo);
+
+    //Começa com
+    //List<Anime> findByNomeStartsWith(String termo);
+
+    //Termina com
+    //List<Anime> findByNomeEndsWith(String termo);
+
+    //@Query permite a execução de comandos MYSQL
+    @Query(value = "select * from anime where nome like :termo", nativeQuery = true)
+    List<Anime> animeLikeTermo(String termo);
+
+    Integer countByCodigo(Integer codigo);
 }
